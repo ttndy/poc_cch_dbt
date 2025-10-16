@@ -1,0 +1,19 @@
+cch:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: 'not needed'
+      user: 'not needed'
+      role: PROD_CCH_RW_FR
+      database: POC_CCH_DBT
+      schema: DEV
+      warehouse: PROD_ANALYTICS_WH
+    prod:
+      type: snowflake
+      account: 'not needed'
+      user: 'not needed'
+      role: PROD_CCH_RW_FR
+      database: POC_CCH_DBT
+      schema: PROD
+      warehouse: PROD_ANALYTICS_WH
