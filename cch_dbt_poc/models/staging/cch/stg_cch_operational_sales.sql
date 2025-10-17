@@ -1,0 +1,15 @@
+SELECT 
+     CCH.SCENARIO            AS "scenario"
+    ,CCH.ENTITY              AS "entity"
+    ,CCH.PERIOD              AS "period"
+    ,CCH.CUSTOMER            AS "customer"
+    ,CCH.PRODUCT             AS "material"
+    ,CCH.REGION              AS "region"
+    ,CCH.BILLINGTYPE         AS "billing_type"
+    ,CCH.ACCOUNT             AS "cch__account"
+    ,CCH.CATEGORY            AS "cch__allocation"
+    ,CCH.AMOUNT              AS "amount"
+    ,CCH.USER                AS "created_by"
+    ,CCH.LOGTIME             AS "log_info"
+    ,CCH.INSERT_DATE_TIME    AS "insert_as_of_date_time"
+FROM {{source('raw_cch','src_cch_operational_sales')}} AS CCH

@@ -1,8 +1,8 @@
 ## Project
-name: tasty_bytes
+name: cch_dbt_poc
 version: "1.0"
 config-version: 2
-profile: tasty_bytes
+profile: cch
 
 ## Sources
 model-paths: [models]
@@ -18,8 +18,8 @@ clean-targets: [target, dbt_modules]
 
 ## Models
 models:
-  tasty_bytes:
+  cch_dbt_poc:
     staging:
       +materialized: view
     marts:
-      +materialized: table
+      +materialized: view

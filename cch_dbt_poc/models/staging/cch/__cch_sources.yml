@@ -1,0 +1,34 @@
+version: 2
+sources:
+- name: raw_cch
+  description: 'CCH Output'
+  database: CCH
+  schema: PROD
+  tables:
+  - name: src_cch_operational_sales
+    identifier: CCH_OUTPUT_OPERATIONAL_SALES
+    description: 'Export of CCH'
+    columns:
+    - name: SCENARIO
+      description: 'Forecast Sceanrio typicall {Year}{Month}'
+      data_tests:
+        - not_null
+    - name: PERIOD
+      description: 'Month of given forecast scenario'
+      data_tests:
+        - is_positive_amount
+    - name: PRODUCT
+      description: 'Model / Material assocaited with a given line'
+      data_tests:
+        - not_null:
+            config:
+              severity: warn
+    - name: ACCOUNT
+      description: 'Operational Account associated with GL line'
+      data_tests:
+        - not_null
+    - name: CATEGORY
+      description: 'Describes how CCH allocated given amount'
+      data_tests:
+        - not_null
+ 
