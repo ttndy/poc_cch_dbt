@@ -1,3 +1,4 @@
+-- Make sure that this works as expected
 SELECT 
      UPLOAD."material"                                  AS "material"
     ,UPLOAD."material_description"                      AS "material_description"
