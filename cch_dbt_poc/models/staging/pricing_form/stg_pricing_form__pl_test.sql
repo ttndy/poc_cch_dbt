@@ -7,6 +7,8 @@ SELECT
     ,BASE.SUB_CATEGORY                      AS "sub_categorty"
     ,BASE.POWER_DESC                        AS "power_description"
     ,BASE.MFG_SOURCE                        AS "manufacturing_source"
+    ,'Domestic'                             AS "shipping_terms"
+    ,'Out for Repair'                       AS "return_hadling_type" -- Fix in upload
     ,BASE.NEW_PRODUCT                       AS "is_new_product"
     ,BASE.TYPE                              AS "submisison_type"
     ,BASE.CUSTOMER                          AS "customer"
