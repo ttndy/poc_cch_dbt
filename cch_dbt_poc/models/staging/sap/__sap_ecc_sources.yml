@@ -1,0 +1,32 @@
+version: 2
+sources:
+- name: sap_ecc
+  description: 'SAP ECC Loaded Data (Should match SE16n)'
+  database: BODS_PRD
+  schema: PUBLISH_ECC
+  tables:
+  - name: src_sap_ecc__faglflexa
+    identifier: FAGLFLEXA
+    description: 'Line items for postings in the New General Ledger'
+    columns:
+    - name: RCLNT
+      data_tests:
+        - not_null
+    - name: RYEAR
+      data_tests:
+        - not_null
+    - name: DOCNR
+      data_tests:
+        - not_null
+    - name: RLDNR
+      data_tests:
+        - not_null
+    - name: RBUKRS
+      data_tests:
+        - not_null
+    - name: DOCLN
+      data_tests:
+        - not_null
+    - name: BUZEI
+      data_tests:
+        - not_null
