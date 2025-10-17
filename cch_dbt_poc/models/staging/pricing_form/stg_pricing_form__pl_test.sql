@@ -1,3 +1,4 @@
+-- May Want to unpivot for COMPS
 SELECT 
      BASE.PRODUCT                           AS "material"
     ,BASE.DESCRIPTION                       AS "material_description"
