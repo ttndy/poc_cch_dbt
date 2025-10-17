@@ -1,0 +1,25 @@
+## Currently No Tests Established Need to establish
+version: 2
+sources:
+- name: pricing_form
+  description: 'Data tables used to support pricing Form'
+  database: OPE_FINANCE
+  schema: PRICING_FORM
+  tables:
+  - name: src_base_drivers
+    identifier: BASE_DRIVERS_DATA
+  - name: src_pricing_pl_test_data
+    identifier: DUMMY_DATA
+    description: 'Test Data for dev only'
+  - name: src_dutty_rates
+    identifier: DUTY_TABLE
+  - name: src_manufacturing_rates
+    identifier: MFG_TABLE
+  - name: src_warranty_rates
+    identifier: PRODUCTS_TABLE
+  - name: src_sga_rates
+    identifier: SGA_TABLE
+  - name: src_gross_margin_targets
+    identifier: TARGET_DATA
+  - name: src_tarrif_types
+    identifier: TARIFF_TYPE
