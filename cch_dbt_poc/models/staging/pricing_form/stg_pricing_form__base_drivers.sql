@@ -1,5 +1,5 @@
 SELECT 
-     BASE.CUST_GROUP             AS "customer_group"
+     BASE.CUST_GROUP             AS "customer"
     ,BASE.DEPARTMENT             AS "department"
     ,BASE.PRICING_FORM_ACCOUNT   AS "pricing_form_account"
     ,BASE.DRIVER                 AS "driver_account"
