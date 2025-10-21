@@ -7,4 +7,5 @@ SELECT
     ,BASE.VALUE                      AS "value"
     ,BASE.SGA_BUDGET_CAT             AS "sga_budget_account_refrence"
     ,BASE.DATE_UPDATED               AS "updated_as_of_date"
+    ,'2025ACT'                       AS "scenario"
 FROM {{source('pricing_form', 'src_sga_rates')}} AS BASE 

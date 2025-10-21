@@ -16,6 +16,10 @@ SELECT
         ,WARRANTY_AVG."value"
     )                                                   AS "rate"
     ,'GROSSSALES$'                                      AS "driver"
+    ,COALESCE(
+         WARRANTY."scenario"
+        ,WARRANTY_AVG."scenario"
+    )                                                   AS "rate_scenario"
 FROM {{ ref('stg_pricing_form__pl_test') }} AS UPLOAD
     CROSS JOIN (
         SELECT DISTINCT 
