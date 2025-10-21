@@ -5,7 +5,7 @@ SELECT
     ,BASE.MATERIAL_TYPE                     AS "material_type"
     ,BASE.POWER_SOURCE                      AS "form_of_power"
     ,BASE.CATEGORY_GROUP                    AS "category_group"
-    ,BASE.SUB_CATEGORY                      AS "sub_categorty"
+    ,BASE.SUB_CATEGORY                      AS "sub_category"
     ,BASE.POWER_DESC                        AS "power_description"
     ,BASE.MFG_SOURCE                        AS "manufacturing_source"
     ,'Domestic'                             AS "shipping_terms"

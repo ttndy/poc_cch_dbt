@@ -15,16 +15,22 @@ SELECT
          WARRANTY."value"
         ,WARRANTY_AVG."value"
     )                                                   AS "rate"
-    ,'GROSSSAELS$'                                      AS "driver"
+    ,'GROSSSALES$'                                      AS "driver"
 FROM {{ ref('stg_pricing_form__pl_test') }} AS UPLOAD
+    CROSS JOIN (
+        SELECT DISTINCT 
+            "pricing_form_account" 
+        FROM {{ ref('stg_pricing_form__warranty_rates')}}
+    ) AS ACC
     LEFT JOIN {{ ref('stg_pricing_form__warranty_rates')}} AS WARRANTY
         ON UPLOAD."customer" = WARRANTY."customer_group"
         AND UPLOAD."material_type" = WARRANTY."material_type"
         AND UPLOAD."form_of_power" = WARRANTY."form_of_power"
         AND UPLOAD."category_group" = WARRANTY."category_group"
-        AND UPLOAD."sub_categorty" = WARRANTY."sub_categorty"
+        AND UPLOAD."sub_category" = WARRANTY."sub_category"
         AND UPLOAD."power_description" = WARRANTY."power_description"
-        AND UPLOAD."return_hadling_type" = WARRANTY."return_hadling_type"  Should be added to upload
+        AND UPLOAD."return_hadling_type" = WARRANTY."return_hadling_type"  -- Should be added to upload
+        AND ACC."pricing_form_account" = WARRANTY."pricing_form_account"
     LEFT JOIN {{ ref('stg_pricing_form__warranty_rates')}} AS WARRANTY_AVG
-        ON UPLOAD."return_hadling_type" = (WARRANTY_AVG."return_hadling_type" || 'Average')
-        AND WARRANTY."pricing_form_account" = WARRANTY_AVG."pricing_form_account"
+        ON (UPLOAD."return_hadling_type" || 'Average') = WARRANTY_AVG."return_hadling_type"
+        AND ACC."pricing_form_account" = WARRANTY_AVG."pricing_form_account"
