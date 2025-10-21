@@ -1,7 +1,7 @@
--- Make sure that this works as expected
 SELECT 
      UPLOAD."material"                                  AS "material"
     ,UPLOAD."material_description"                      AS "material_description"
+    ,UPLOAD."submisison_type"                           AS "submisison_type"
     ,UPLOAD."customer"                                  AS "customer"
     ,UPLOAD."department"                                AS "department"
     ,UPLOAD."new_invoice"                               AS "new_invoice"
@@ -15,7 +15,7 @@ SELECT
          WARRANTY."value"
         ,WARRANTY_AVG."value"
     )                                                   AS "rate"
-    ,'GROSSSALES$'                                      AS "driver"
+    ,'GROSSSALES$'                                      AS "driver"         -- SAM to add to base tables
     ,COALESCE(
          WARRANTY."scenario"
         ,WARRANTY_AVG."scenario"
