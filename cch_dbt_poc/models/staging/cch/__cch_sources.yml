@@ -31,4 +31,11 @@ sources:
       description: 'Describes how CCH allocated given amount'
       data_tests:
         - not_null
- 
+  - name: src_cch_account_master
+    identifier: CCH_DIM_ACCOUNT_MASTER
+    description: "CCH Account master maintained in SharePoint and in Snowflake"
+    columns:
+    - name: COD_CONTO
+      data_tests:
+        - not_null
+      
