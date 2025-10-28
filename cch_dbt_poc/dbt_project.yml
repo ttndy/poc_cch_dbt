@@ -19,6 +19,8 @@ clean-targets: [target, dbt_modules]
 ## Models
 models:
   cch_dbt_poc:
+    int:
+      +materialized: ephemeral
     staging:
       +materialized: view
     marts:
