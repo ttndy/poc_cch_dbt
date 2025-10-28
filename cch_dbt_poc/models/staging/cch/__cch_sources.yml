@@ -46,4 +46,10 @@ sources:
       data_tests:
       - not_null
       - unique 
+  - name: src_cch_all_parts
+    identifier: CCH_DIM_ALL_PARTS
+    columns: 
+    - name: MODEL
+      data_tests:
+       - not_null
     
