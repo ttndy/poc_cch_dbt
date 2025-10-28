@@ -38,4 +38,12 @@ sources:
     - name: COD_CONTO
       data_tests:
         - not_null
-      
+  - name: src_cch_advertising_accounts
+    identifier: CCH_DIM_ACCT_ADVERTISING
+    description: "Table contaning Advertising Accounts"
+    columns:
+    - name: GL
+      data_tests:
+      - not_null
+      - unique 
+    
