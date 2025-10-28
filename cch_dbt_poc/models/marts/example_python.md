@@ -76,3 +76,4 @@ def model(dbt, session):
     
     # Return the final dataframe
     return final_with_desc
+    
