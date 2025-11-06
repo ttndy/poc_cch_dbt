@@ -30,3 +30,22 @@ sources:
     - name: BUZEI
       data_tests:
         - not_null
+  - name: src_sap_ecc__mara
+    identifier: MARA
+  - name: src_sap_ecc__marc
+    identifier: MARC
+  - name: src_sap_ecc__makt
+    identifier: MAKT
+  - name: src_sap_ecc__mvke
+    identifier: MVKE
+  ## Mangment Reporting Code Description
+  - name: src_sap_ecc__tvm1t
+    identifier: TVM1T
+  - name: src_sap_ecc__tvm2t
+    identifier: TVM2T
+  - name: src_sap_ecc__tvm3t
+    identifier: TVM3T
+  - name: src_sap_ecc__tvm4t
+    identifier: TVM4T
+  - name: src_sap_ecc__tvm5t
+    identifier: TVM5T
