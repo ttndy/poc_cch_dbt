@@ -36,3 +36,4 @@ QUALIFY ROW_NUMBER()
         ORDER BY 
             MVKE.MATNR ASC
     ) = 1
+

@@ -1,0 +1,18 @@
+SELECT 
+     ASIA.PH_L1_CODE                 AS "material_product_hierarchy__1"
+    ,ASIA.PH_L1_DESC                 AS "material_product_hierarchy_description__1"
+    ,ASIA.PH_L2_CODE                 AS "material_product_hierarchy__2"
+    ,ASIA.PH_L2_DESC                 AS "material_product_hierarchy_description__2"
+    ,ASIA.PH_L4_CODE                 AS "material_product_hierarchy__4"
+    ,ASIA.PH_L4_DESC                 AS "material_product_hierarchy_description__4"
+    ,ASIA.PH_L6_CODE                 AS "material_product_hierarchy__6"
+    ,ASIA.PH_L6_DESC                 AS "material_product_hierarchy_description__6"
+    ,ASIA.PH_L7_CODE                 AS "material_product_hierarchy__7"
+    ,ASIA.PH_L7_DESC                 AS "material_product_hierarchy_description__7"
+    ,ASIA.PH_L8_CODE                 AS "material_product_hierarchy__8"
+    ,ASIA.PH_L8_DESC                 AS "material_product_hierarchy_description__8"
+    ,ASIA.MG4_CODE                   AS "material_group_4_code"
+    ,ASIA.MG4_DESC                   AS "manufacturing_classification"
+    ,ASIA."Variance_Allocation"      AS "variance_alloaction"
+    ,ASIA."Variance_Allocation_Code" AS "variance_alloaction_code"
+FROM {{ source('raw_cch', 'src_cch__dim_asia_classifactions')}} AS ASIA

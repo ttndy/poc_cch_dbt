@@ -79,3 +79,6 @@ sources:
   - name: src_sap_ecc__T25B8
     identifier: T25B8
     description: "PH8 Refrence"
+  - name: src_sap_ecc__twewt
+    identifier: TWEWT
+    description: "External material group description"
