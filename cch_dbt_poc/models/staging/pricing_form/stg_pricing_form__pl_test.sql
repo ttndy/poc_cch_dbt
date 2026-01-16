@@ -8,8 +8,8 @@ SELECT
     ,BASE.SUB_CATEGORY                      AS "sub_category"
     ,BASE.POWER_DESC                        AS "power_description"
     ,BASE.MFG_SOURCE                        AS "manufacturing_source"
-    ,'Domestic'                             AS "shipping_terms"
-    ,'Out for Repair'                       AS "return_hadling_type" -- Fix in upload
+    ,BASE.SHIPPING_TERMS                    AS "shipping_terms"
+    ,BASE.RETURN_HANDLING                   AS "return_handling_type" 
     ,BASE.NEW_PRODUCT                       AS "is_new_product"
     ,BASE.TYPE                              AS "submisison_type"
     ,BASE.CUSTOMER                          AS "customer"
@@ -19,11 +19,12 @@ SELECT
     ,BASE.INVOICE                           AS "new_invoice"
     ,BASE.EXISTING_INVOICE                  AS "current_invoice"
     ,BASE.OD_STD_COST                       AS "outdoor_standard_cost"
-    ,BASE.TTI_GM_PRECENTAGE                 AS "gross_margin_percentage"
-    ,BASE.TTI_EBIT_PRECENTAGE               AS "ebit_percentage"
-    ,BASE.GROSS_IMU_PRECENTAGE              AS "gross_imu_percentage"
-    ,BASE.NET_IMU_PRECENTAGE                AS "net_imu_percentage"
+    ,BASE.TTI_GM_PERCENTAGE                 AS "gross_margin_percentage"
+    ,BASE.TTI_EBIT_PERCENTAGE               AS "ebit_percentage"
+    ,BASE.GROSS_IMU_PERCENTAGE              AS "gross_imu_percentage"
+    ,BASE.NET_IMU_PERCENTAGE                AS "net_imu_percentage"
     ,BASE.NOTES                             AS "addtional_notes"
+    ,BASE.SCENARIO_YEAR                     AS "scenario_year"
     ,DATEADD(
          day
         ,CAST(BASE.START_DATE AS INT) -

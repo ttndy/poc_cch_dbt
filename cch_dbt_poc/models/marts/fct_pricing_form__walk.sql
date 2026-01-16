@@ -9,7 +9,7 @@ SELECT
     ,"standard_cost"
     ,"pricing_form_account"
     ,"rate"
-    ,"driver"
+    ,"driver"::VARCHAR AS "driver"
     ,"rate_scenario"
 FROM (
     SELECT *
@@ -28,5 +28,5 @@ FROM (
     UNION ALL 
     
     SELECT *
-    FROM {{ ref('int_pricing_form__waranty')}} AS WARANTY -- hello
+    FROM {{ ref('int_pricing_form__waranty')}} AS WARRANTY 
 )

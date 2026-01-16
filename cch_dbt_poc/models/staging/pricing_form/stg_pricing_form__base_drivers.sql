@@ -6,5 +6,5 @@ SELECT
     ,BASE.ACCOUNT                AS "cch__account"
     ,BASE.VALUE                  AS "value"
     ,BASE.DATE_UPDATED           AS "updated_as_of_date" 
-    ,'2025ACT'                   AS "scenario"
+    ,BASE.SCENARIO_YEAR          AS "scenario_year"
 FROM {{source('pricing_form', 'src_base_drivers')}} AS BASE

@@ -10,7 +10,7 @@ SELECT
     ,SGA."pricing_form_account"                         AS "pricing_form_account"
     ,SGA."value"                                        AS "rate"
     ,SGA."driver"                                       AS "driver"
-    ,SGA."scenario"                                     AS "rate_scenario"
+    ,SGA."scenario_year"                                AS "rate_scenario"
 FROM {{ ref('stg_pricing_form__pl_test') }} AS UPLOAD
     LEFT JOIN {{ ref('stg_pricing_form__sga_rates')}} AS SGA
         ON UPLOAD."material_type" = SGA."material_type"

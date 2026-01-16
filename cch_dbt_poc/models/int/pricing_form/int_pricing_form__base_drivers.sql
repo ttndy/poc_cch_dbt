@@ -10,7 +10,7 @@ SELECT
     ,BASE_DRIVER."pricing_form_account"                 AS "pricing_form_account"
     ,BASE_DRIVER."value"                                AS "rate"
     ,BASE_DRIVER."driver_account"                       AS "driver"
-    ,BASE_DRIVER."scenario"                             AS "rate_scenario"
+    ,BASE_DRIVER."scenario_year"                        AS "rate_scenario"
 FROM {{ ref('stg_pricing_form__pl_test') }} AS UPLOAD
     LEFT JOIN {{ ref('stg_pricing_form__base_drivers')}} AS BASE_DRIVER
         ON UPLOAD."customer" = BASE_DRIVER."customer"

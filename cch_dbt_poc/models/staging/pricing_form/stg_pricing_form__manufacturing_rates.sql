@@ -5,5 +5,5 @@ SELECT
     ,BASE.SHIPPING_TERMS        AS "shipping_terms"
     ,BASE.VALUE                 AS "value"
     ,BASE.DATE_UPDATED          AS "updated_as_of_date"
-    ,'2025ACT'                  AS "scenario"
+    ,BASE.SCENARIO_YEAR         AS "scenario_year"
 FROM {{source('pricing_form', 'src_manufacturing_rates')}} AS BASE 
