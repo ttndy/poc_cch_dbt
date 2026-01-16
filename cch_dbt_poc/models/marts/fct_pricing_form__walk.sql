@@ -28,5 +28,5 @@ FROM (
     UNION ALL 
     
     SELECT *
-    FROM {{ ref('int_pricing_form__waranty')}} AS WARANTY
+    FROM {{ ref('int_pricing_form__waranty')}} AS WARANTY -- hello
 )
