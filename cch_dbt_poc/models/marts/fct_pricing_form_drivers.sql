@@ -12,7 +12,7 @@ WITH BASE AS (
         ,"rate_scenario"                                          AS "rate_scenario"
         ,"pricing_form_account"                                   AS "pricing_form_account"
         ,"rate"                                                   AS "rate"
-    FROM POC_CCH_DBT.DEV.fct_pricing_form__walk
+    FROM {{ref('fct_pricing_form__walk')}}
 )
 
 ,AGG_RATES AS (

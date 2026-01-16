@@ -10,6 +10,5 @@ SELECT
     ,BASE.DRIVER                     AS "driver_account"
     ,BASE.VALUE                      AS "value"
     ,BASE.DATE_UPDATED               AS "updated_as_of_date"
-    ,BASE.SCENARIO                   AS "test_scenario"        -- SAM To Look into 
-    ,'2025ACT'                       AS "scenario"             -- Updates in future table
+    ,BASE.SCENARIO_YEAR              AS "scenario"        -- SAM To Look into 
 FROM {{source('pricing_form', 'src_warranty_rates')}} AS BASE
