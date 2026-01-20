@@ -25,20 +25,22 @@ SELECT
     ,BASE.NET_IMU_PERCENTAGE                AS "net_imu_percentage"
     ,BASE.NOTES                             AS "addtional_notes"
     ,BASE.SCENARIO_YEAR                     AS "scenario_year"
-    ,DATEADD(
-         day
-        ,CAST(BASE.START_DATE AS INT) -
-            CASE 
-                WHEN START_DATE != 0 
-                    THEN 2 
-                ELSE 
-                    0
-                END
-        ,'1900-01-01'
-    )                                        AS "start_date"
-    ,DATEADD(
-         day
-        ,CAST(BASE.END_DATE AS INT) - 2
-        ,'1900-01-01'
-    )                                        AS "end_date"
+    ,BASE.MATERIAL_LAB_OH                   AS "material_overhead_cost"
+    ,BASE.TRANSPO_COST                      AS "transport_cost"
+--    ,DATEADD(
+--         day
+--        ,CAST(BASE.START_DATE AS INT) -
+--            CASE 
+--                WHEN START_DATE != 0 
+--                    THEN 2 
+--                ELSE 
+--                    0
+--                END
+--        ,'1900-01-01'
+--    )                                        AS "start_date"
+--    ,DATEADD(
+--         day
+--        ,CAST(BASE.END_DATE AS INT) - 2
+--        ,'1900-01-01'
+--    )                                        AS "end_date"
 FROM {{source('pricing_form', 'src_pricing_pl_test_data')}} AS BASE
