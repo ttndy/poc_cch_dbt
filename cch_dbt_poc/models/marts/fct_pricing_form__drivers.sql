@@ -12,9 +12,29 @@ WITH WALK AS (
         ,"rate_scenario"                                          AS "rate_scenario"
         ,"pricing_form_account"                                   AS "pricing_form_account"
         ,"rate"                                                   AS "rate"
-        ,"mat_oh_cost"                                            AS "mat_oh_cost"
+        ,"mat_oh_cost"                                            AS "mat_oh_cost" -- REMEMBER TO REMOVE!!!
     FROM {{ref('fct_pricing_form__walk')}}
-)
+    )
+, WALK_PIVOT AS (
+    SELECT 
+        "material",
+        "submisison_type",  
+        "customer",
+        "department",
+        "new_invoice",
+        "rate_scenario",
+        MAX(CASE WHEN "driver" = 'Mat OH Cost' THEN "rate" ELSE NULL END) AS "mat_oh_cost",
+        MAX(CASE WHEN "driver" = 'Transport Rate' THEN "rate" ELSE NULL END) AS "transpo_cost",
+        MAX(CASE WHEN "driver" = 'Markup %' THEN "rate" ELSE NULL END) AS "markup_perc"
+    FROM POC_CCH_DBT.DEV.FCT_PRICING_FORM__WALK
+    GROUP BY 
+        "material",
+        "submisison_type",
+        "customer",
+        "department",
+        "new_invoice",
+        "rate_scenario"
+    )
 
 ,AGG_RATES AS (
     SELECT 
@@ -85,22 +105,39 @@ DRIVERS AS (
         ,COALESCE(AGG_RATES."sales_adj_rates", 0)           AS "sales_adj_rates"
         ,COALESCE(AGG_RATES."glr_adj_rates", 0)             AS "glr_adj_rates"
         ,CASE 
+        
             WHEN WALK."driver" = 'GLRCALCULATION$' THEN 
-                WALK."new_invoice" + (WALK."new_invoice" * COALESCE(AGG_RATES."return_rate", 0))
+                WALK."new_invoice" - (WALK."new_invoice" * COALESCE(AGG_RATES."return_rate", 0))
+                
             WHEN WALK."driver" IN ('SALES$', 'GROSSSALES$', 'OCOGS') THEN 
                 WALK."new_invoice"
+                
             WHEN WALK."driver" = 'NETSALES$' THEN 
-                (WALK."new_invoice" + (WALK."new_invoice" * COALESCE(AGG_RATES."return_rate", 0)))
-                + ((WALK."new_invoice" + (WALK."new_invoice" * COALESCE(AGG_RATES."return_rate", 0))) * COALESCE(AGG_RATES."glr_adj_rates", 0))
-                + (WALK."new_invoice" * COALESCE(AGG_RATES."sales_adj_rates", 0))
+                (WALK."new_invoice" - (WALK."new_invoice" * COALESCE(AGG_RATES."return_rate", 0)))
+                - ((WALK."new_invoice" - (WALK."new_invoice" * COALESCE(AGG_RATES."return_rate", 0))) * COALESCE(AGG_RATES."glr_adj_rates", 0))
+                - (WALK."new_invoice" * COALESCE(AGG_RATES."sales_adj_rates", 0))
+                        
             WHEN WALK."driver" = 'Mat OH Cost' THEN 
                 WALK."rate"
-            WHEN WALK."driver" = 'Markup %' THEN
-                WALK."rate" * WALK."mat_oh_cost"
-            ELSE WALK."standard_cost"
                 
+            WHEN WALK."driver" = 'Markup %' THEN
+                WALK."rate" * WALK_PIVOT."mat_oh_cost"     
+                
+            WHEN WALK."driver" IN ('HMF', 'MPF') THEN 
+                WALK."rate" * (WALK_PIVOT."markup_perc"* WALK_PIVOT."mat_oh_cost" + WALK_PIVOT."mat_oh_cost") 
+                + WALK_PIVOT."transpo_cost"/2
+             ELSE WALK."standard_cost"
         END                                                 AS "value"
     FROM WALK
+    
+        LEFT JOIN WALK_PIVOT
+            ON  WALK."material"        = WALK_PIVOT."material"
+            AND WALK."submisison_type" = WALK_PIVOT."submisison_type"
+            AND WALK."customer"        = WALK_PIVOT."customer"
+            AND WALK."department"      = WALK_PIVOT."department"
+            AND WALK."new_invoice"     = WALK_PIVOT."new_invoice"
+            AND WALK."rate_scenario"   = WALK_PIVOT."rate_scenario"
+            
         LEFT JOIN AGG_RATES
             ON  WALK."material"        = AGG_RATES."material"
             AND WALK."submisison_type" = AGG_RATES."submisison_type"
@@ -108,6 +145,8 @@ DRIVERS AS (
             AND WALK."department"      = AGG_RATES."department"
             AND WALK."new_invoice"     = AGG_RATES."new_invoice"
             AND WALK."rate_scenario"   = AGG_RATES."rate_scenario"
+         
+            
 )
 SELECT 
      "material"
