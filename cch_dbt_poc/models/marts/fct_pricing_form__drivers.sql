@@ -126,8 +126,12 @@ DRIVERS AS (
             WHEN WALK."driver" IN ('HMF', 'MPF') THEN 
                 WALK."rate" * (WALK_PIVOT."markup_perc"* WALK_PIVOT."mat_oh_cost" + WALK_PIVOT."mat_oh_cost") 
                 + WALK_PIVOT."transpo_cost"/2
-             ELSE WALK."standard_cost"
-        END                                                 AS "value"
+
+            WHEN WALK."driver" = 'DUTY$' THEN 
+                WALK."rate" * (WALK_PIVOT."markup_perc"* WALK_PIVOT."mat_oh_cost" + WALK_PIVOT."mat_oh_cost")
+
+            ELSE WALK."standard_cost"             
+            END                                                 AS "value"
     FROM WALK
     
         LEFT JOIN WALK_PIVOT

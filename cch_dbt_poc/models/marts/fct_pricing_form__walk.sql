@@ -30,4 +30,9 @@ FROM (
     
     SELECT *  
     FROM {{ ref('int_pricing_form__waranty')}} AS WARRANTY 
+
+    UNION ALL -------------------------------------------------------
+    
+    SELECT *  
+    FROM {{ ref('int_pricing_form__duty_rates')}} AS DUTY
 )
