@@ -9,7 +9,10 @@ SELECT
     ,UPLOAD."new_retail"                                AS "new_retail"
     ,UPLOAD."outdoor_standard_cost"                     AS "standard_cost"
     ,'Duty'                                             AS "pricing_form_account"
-    ,DUTY."value"                                       AS "rate"
+    ,CASE 
+        WHEN UPLOAD."customer" LIKE ('%Direct Import%') THEN 0 
+        ELSE DUTY."value"                                      
+        END                                             AS "rate"
     ,'DUTY$'                                            AS "driver"
     ,UPLOAD."scenario_year"                             AS "rate_scenario"
     ,UPLOAD."material_overhead_cost"                    AS "mat_oh_cost"

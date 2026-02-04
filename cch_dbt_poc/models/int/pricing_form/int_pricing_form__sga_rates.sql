@@ -10,7 +10,10 @@ SELECT
     ,UPLOAD."new_retail"                                AS "new_retail"
     ,UPLOAD."outdoor_standard_cost"                     AS "standard_cost"
     ,SGA."pricing_form_account"                         AS "pricing_form_account"
-    ,ABS(SGA."value")                                   AS "rate"
+    ,CASE 
+        WHEN UPLOAD."customer" LIKE ('%Direct Import%') AND SGA."pricing_form_account" ='Distribution' THEN 0 
+        ELSE ABS(SGA."value")                                   
+        END                                             AS "rate"
     ,SGA."driver"                                       AS "driver"
     ,SGA."scenario_year"                                AS "rate_scenario"
     ,UPLOAD."material_overhead_cost"                    AS "mat_oh_cost"

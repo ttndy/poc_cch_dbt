@@ -121,7 +121,10 @@ DRIVERS AS (
                 WALK."rate"
                 
             WHEN WALK."driver" = 'Markup %' THEN
-                WALK."rate" * WALK_PIVOT."mat_oh_cost"     
+                WALK."rate" * WALK_PIVOT."mat_oh_cost"    
+
+            WHEN WALK."customer" LIKE ('%Direct Import%') and WALK."driver" IN ('DUTY$', 'Distribution', 'HMF', 'MPF')
+                THEN 0
                 
             WHEN WALK."driver" IN ('HMF', 'MPF') THEN 
                 WALK."rate" * (WALK_PIVOT."markup_perc"* WALK_PIVOT."mat_oh_cost" + WALK_PIVOT."mat_oh_cost") 
@@ -129,7 +132,7 @@ DRIVERS AS (
 
             WHEN WALK."driver" = 'DUTY$' THEN 
                 WALK."rate" * (WALK_PIVOT."markup_perc"* WALK_PIVOT."mat_oh_cost" + WALK_PIVOT."mat_oh_cost")
-
+            
             ELSE WALK."standard_cost"             
             END                                                 AS "value"
     FROM WALK
