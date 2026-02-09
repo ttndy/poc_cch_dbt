@@ -31,4 +31,37 @@ sources:
       description: 'Describes how CCH allocated given amount'
       data_tests:
         - not_null
- 
+  - name: src_cch_account_master
+    identifier: CCH_DIM_ACCOUNT_MASTER
+    description: "CCH Account master maintained in SharePoint and in Snowflake"
+    columns:
+    - name: COD_CONTO
+      data_tests:
+        - not_null
+  - name: src_cch_advertising_accounts
+    identifier: CCH_DIM_ACCT_ADVERTISING
+    description: "Table contaning Advertising Accounts"
+    columns:
+    - name: GL
+      data_tests:
+      - not_null
+      - unique 
+  - name: src_cch_all_parts
+    identifier: CCH_DIM_ALL_PARTS
+    columns: 
+    - name: MODEL
+      data_tests:
+       - not_null
+  - name: src_cch__fin_cats
+    identifier: CCH_DIM_FINCATS
+    description: "Finace Uploaded Fincats used for FINCAT__{1,2}"
+  - name: src_cch__dim_product_team
+    identifier: CCH_DIM_PRODUCT_TEAM
+    description: "Refrence table for product team joins on PH"
+  - name: src_cch__dim__hart_product_team
+    identifier:  CCH_DIM_PRODUCT_TEAM_HART
+    description: "Refrence table for HART product team join condtion on material"
+  - name: src_cch__dim_asia_classifactions
+    identifier: DIM_PRC_CATEGORY_MASTER
+    description: "Refrence for Asia Allocations"
+  

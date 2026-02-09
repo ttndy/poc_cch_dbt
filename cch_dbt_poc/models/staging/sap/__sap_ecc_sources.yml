@@ -30,3 +30,55 @@ sources:
     - name: BUZEI
       data_tests:
         - not_null
+  - name: src_sap_ecc__mara
+    identifier: MARA
+  - name: src_sap_ecc__marc
+    identifier: MARC
+  - name: src_sap_ecc__makt
+    identifier: MAKT
+  - name: src_sap_ecc__mvke
+    identifier: MVKE
+  ## Mangment Reporting Code Description
+  - name: src_sap_ecc__tvm1t
+    identifier: TVM1T
+    description: "Mangment Group 1 Refrence"
+  - name: src_sap_ecc__tvm2t
+    identifier: TVM2T
+    description: "Mangment Group 2 Refrence"
+  - name: src_sap_ecc__tvm3t
+    identifier: TVM3T
+    description: "Mangment Group 3 Refrence"
+  - name: src_sap_ecc__tvm4t
+    identifier: TVM4T
+    description: "Mangment Group 4 Refrence"
+  - name: src_sap_ecc__tvm5t
+    identifier: TVM5T
+    description: "Mangment Group 5 Refrence"
+  ## Product Heirachy Descriptions 
+  - name:  src_sap_ecc__T25A7
+    identifier: T25A7
+    description: "PH1 Refrence"
+  - name:  src_sap_ecc__T25A8
+    identifier: T25A8
+    description: "PH2 Refrence"
+  - name:  src_sap_ecc__T25A9
+    identifier: T25A9
+    description: "PH3 Refrence"
+  - name:  src_sap_ecc__T25B0
+    identifier: T25B0
+    description: "PH4 Refrence"
+  - name: src_sap_ecc__T25B1
+    identifier: T25B1
+    description: "PH5 Refrence"
+  - name: src_sap_ecc__T25B5
+    identifier: T25B5
+    description: "PH6 Refrence"
+  - name: src_sap_ecc__T25B6
+    identifier: T25B6
+    description: "PH7 Refrence"
+  - name: src_sap_ecc__T25B8
+    identifier: T25B8
+    description: "PH8 Refrence"
+  - name: src_sap_ecc__twewt
+    identifier: TWEWT
+    description: "External material group description"
