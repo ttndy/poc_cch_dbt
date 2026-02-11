@@ -16,6 +16,13 @@ snapshot-paths: [snapshots]
 target-path: target
 clean-targets: [target, dbt_modules]
 
+## Variables
+vars:
+  cch_valid_company: "'1400', '1300', '1600', '1800', '1950', '1200', '1700'"
+  return_types: "'RE', 'ZS2', 'ZM4'"
+  man_sales_types: "'ZM6', 'ZM1'"
+  mat_cogs_types: "'Z2'"
+
 ## Models
 models:
   cch_dbt_poc:

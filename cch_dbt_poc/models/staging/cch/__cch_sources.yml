@@ -64,4 +64,10 @@ sources:
   - name: src_cch__dim_asia_classifactions
     identifier: DIM_PRC_CATEGORY_MASTER
     description: "Refrence for Asia Allocations"
+  - name: src_cch__dtfo_store_map
+    identifier: DTFO_STORE_MAP
+    description: "Customer to Payer map for DTFO Purposes"
+  - name: src_cch__payer_master
+    identifier: CCH_DIM_CUSTOMER_MASTER
+    description: "Uploaded Payer Master"
   

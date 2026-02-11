@@ -82,3 +82,9 @@ sources:
   - name: src_sap_ecc__twewt
     identifier: TWEWT
     description: "External material group description"
+  - name: src_sap_ecc__copa_4
+    identifier: CO_PA040RYO0_RY
+    description: "COPA Base Data"
+  - name: src_sap_ecc__vbak
+    identifier: vbak 
+    description: "Sales Order Header"

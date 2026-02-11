@@ -1,0 +1,16 @@
+SELECT 
+     CCH.PAYER                          AS "payer_number"
+    ,CCH."Payer Description"            AS "payer_description"
+    ,CCH."Country Code"                 AS "country_code"
+    ,CCH.COUNTRY                        AS "country"
+    ,CCH."CG0 Code"                     AS "customer_group_0_code"
+    ,CCH.CG0                            AS "customer_group_0"
+    ,CCH."CG1 Code"                     AS "customer_group_1_code"
+    ,CCH.CG1                            AS "customer_group_1"
+    ,CCH."CG4 Code"                     AS "customer_group_4_code"
+    ,CCH.CG4                            AS "customer_group_4"
+    ,CCH."HFM SubGroup Code"            AS "hfm_subgroup_code"
+    ,CCH."HFM SubGroup"                 AS "hfm_subgroup"
+    ,CCH."CG5 Code"                     AS "customer_group_5_code"
+    ,CCH.CG5                            AS "hfm_enitty"
+FROM {{ source('raw_cch', 'src_cch__payer_master')}} AS CCH
