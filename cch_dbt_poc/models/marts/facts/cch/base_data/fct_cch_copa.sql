@@ -10,6 +10,8 @@ SELECT
             THEN 'BOPIS' 
         WHEN COPA."payer_number" = '0003010301'
             THEN 'SFS' 
+        WHEN COPA."payer_number" = '0003010426' 
+            THEN 'SFS-BULK'
         ELSE 
             COPA."billing_type" 
         END                                                                 AS "billing_type"
@@ -106,19 +108,24 @@ SELECT
             0
         END                                                             AS "buybacks"
     ,COPA."sales_revenue"                                               AS "sales_revenue"
+    ,CASE 
+        WHEN COPA."company_code" NOT IN (
+            '1950'
+        )
+            THEN COPA."sales_deductions"
+        WHEN "billing_type" NOT IN ('RE', 'ZM4')
+            THEN COPA."sales_allowances"
+        ELSE 
+            0
+        END * -1                                                        AS "sales_deductions"    -- Expense
     ,CASE  
         WHEN COPA."company_code" NOT IN (
             '1950'
         )
-            THEN "sales_deductions"
-        WHEN COPA."billing_type" NOT IN (
-             'RE'
-            ,'ZM4'
-        )
-            THEN COPA."sales_allowances"
+            THEN COPA."defective_allowance"
         ELSE 
-            0
-        END                                                             AS "defective_allowance"
+             "sales_deductions" + COPA."defective_allowance"
+        END * -1                                                         AS "defective_allowance" -- Expens
     ,CASE 
         WHEN COPA."billing_type" IN (
             {{ var('mat_cogs_types') }} 
@@ -135,7 +142,7 @@ SELECT
             THEN COPA."total_cogs" 
         ELSE
             0
-        END                                                             AS "standard_cogs"
+        END * -1                                                         AS "standard_cogs" -- Expense
     ,CASE
         WHEN COPA."billing_type" IN (
             {{ var('man_sales_types') }}
@@ -143,21 +150,24 @@ SELECT
             THEN COPA."total_cogs" 
         ELSE 
             0
-        END                                                             AS "man_standard_cogs"
+        END  * -1                                                       AS "man_standard_cogs" -- Expense
     ,CASE  
         WHEN COPA."billing_type" IN ('RE', 'ZS2')
             THEN COPA."total_cogs" 
         ELSE 
             0
-        END                                                             AS "return_cogs"
+        END * -1                                                        AS "return_cogs" -- Expense
     ,CASE  
         WHEN COPA."billing_type" IN ('ZM4')
             THEN COPA."total_cogs" 
         ELSE 
             0
-        END                                                             AS "man_return_cogs"
+        END  * -1                                                       AS "man_return_cogs" -- Expense
     ,CASE 
-        WHEN COPA."billing_type" NOT IN ('RE')
+        WHEN (
+            COPA."billing_type" NOT IN ('RE')
+            AND COPA."company_code" != '1600'
+        )
             THEN COPA."freight_expense"
         ELSE 
             0
@@ -171,7 +181,7 @@ SELECT
         ELSE    
             0
         END                                                             AS "freigh_return"
-    ,COPA."cash_discounts"                                              AS "cash_discounts"
+    ,COPA."cash_discounts" * -1                                         AS "cash_discounts" -- Expense
     ,CASE
         WHEN (
             COPA."billing_type" NOT IN (
@@ -185,14 +195,14 @@ SELECT
             THEN "sales_allowances"
         ELSE 
             0
-        END                                                             AS "sales_allowances"
+        END  * -1                                                        AS "sales_allowances" -- Expense
     ,CASE  
         WHEN COPA."billing_type"  = 'ZM4'
             THEN COPA."sales_allowances"
                 - COPA."sales_revenue"
         ELSE 
             0
-        END                                                             AS "sales_allowances_returns"
+        END * -1                                                        AS "sales_allowances_returns" -- Expense
     ,CASE
         WHEN COPA."billing_type" IN (
             'RE'
@@ -200,7 +210,7 @@ SELECT
             THEN COPA."sales_allowances"
         ELSE 
             0
-        END                                                             AS "sales_return_discr"
+        END * -1                                                        AS "sales_return_discr" -- Expense
     ,CASE
         WHEN COPA."billing_type" IN (
             'RE'
@@ -208,7 +218,7 @@ SELECT
             THEN COPA."sales_allowances"
         ELSE 
             0
-        END                                                             AS "warr_return_discr"
+        END * -1                                                       AS "warr_return_discr" -- Expense
     ,CASE 
         WHEN COPA."company_code" IN (
             '1950'
@@ -216,7 +226,7 @@ SELECT
             THEN COPA."market_fee"
         ELSE    
             0
-        END                                                             AS "market_fee"
+        END * -1                                                       AS "market_fee" -- Expense
     ,CASE 
         WHEN COPA."company_code" IN (
             '1600'
@@ -224,7 +234,7 @@ SELECT
             THEN COPA."freight_expense"
         ELSE 
             0
-        END                                                             AS "other_income"
+        END                                                            AS "other_income" -- DTFO Freight Income
 FROM {{ ref('stg_copa_4') }} AS COPA
     LEFT JOIN {{ ref('stg_vbak_refrence') }} AS VBAK
         ON COPA."sales_order_number" = VBAK."sales_order_number"
@@ -238,6 +248,3 @@ WHERE
     AND COPA."company_code" IN ({{ var('cch_valid_company') }})
     AND LEFT(COPA."period_raw", 4) >= '2021'
 
-
--- Join customer master for intercomany
--- Make sure staged

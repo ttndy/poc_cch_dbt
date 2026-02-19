@@ -1,0 +1,26 @@
+metric_name,company_code_filter,biling_group_filter,sales_order_code_filter,value_field,sign
+sales_quantity,,NOT:man_returns|returns, ,quantity,1
+gross_sales,,NOT:man_returns|returns|man_sales, ,sales_revenue,1
+man_sales,,IN:man_sales, ,sales_revenue,1
+returns_quantity,,IN:man_returns|returns, ,quantity,1
+sales_revenue_returns,,IN:returns,NOT:011|013|041|051|055|065|075|116,sales_revenue,1
+buybacks,,IN:returns,IN:011|013|041|051|055|065|075|116,sales_revenue,1
+sales_revenue,,,,sales_revenue,1
+sales_deductions,NOT:1950,,,sales_deductions,-1
+sales_deductions,IN:1950,NOT:man_returns|returns,,sales_allowances,-1
+defective_allowance,NOT:1950,,,defective_allowance,-1
+defective_allowance,IN:1950,,,sales_allow_and_defective,-1
+standard_cogs,,NOT:man_returns|returns|man_sales|mat_cogs, ,total_cogs,-1
+standard_cogs,,IN:mat_cogs,,material_cogs,-1
+man_standard_cogs,,IN:man_sales, ,total_cogs,-1
+return_cogs,,IN:returns, ,total_cogs,-1
+man_return_cogs,,IN:man_returns, ,total_cogs,-1
+freight_out,NOT:1600,NOT:returns, ,freight_expense,1
+freight_return,NOT:1600,IN:returns, ,freight_expense,1
+cash_discounts, ,, ,cash_discounts,-1
+sales_allowances,NOT:1950,NOT:man_returns|returns, ,sales_allowances,-1
+sales_allowances_returns,,IN:man_returns,,sales_allow_less_rev,-1
+sales_return_discr,,NOT:returns,,sales_allowances,-1
+warr_return_discr,,NOT:returns,,sales_allowances,-1
+market_fee,IN:1950,, ,market_fee,-1
+other_income,IN:1600,, ,freight_expense,1
