@@ -40,56 +40,43 @@ SELECT
      END 
      * METRIC_RULES.sign                                             AS "metric_value"
 FROM {{ ref('int_copa_base') }} AS COPA 
-    CROSS JOIN {{ ref('copa_metrics_rules') }} AS METRIC_RULES
-WHERE 
-    (
-        METRIC_RULES.company_code_filter IS NULL
-        OR (
-            METRIC_RULES.company_code_filter LIKE 'NOT:%'
-            AND NOT ARRAY_CONTAINS(
-                    SPLIT(TRIM(METRIC_RULES.company_code_filter), '|'), 
-                    COPA."company_code"::VARIANT
-                )
-        )
-        OR (
-            METRIC_RULES.company_code_filter LIKE 'IN:%'
-            AND ARRAY_CONTAINS(
-                SPLIT(TRIM(METRIC_RULES.company_code_filter), '|'), 
-                COPA."company_code"::VARIANT
-            )
-        )
-    )
-    AND (
-        METRIC_RULES.biling_group_filter IS NULL
-        OR (
-            METRIC_RULES.biling_group_filter LIKE 'NOT:%'
-            AND NOT ARRAY_CONTAINS(
-                    SPLIT(TRIM(METRIC_RULES.biling_group_filter), '|'), 
-                    COPA."billing_group"::VARIANT
-                )
-        )
-        OR (
-            METRIC_RULES.biling_group_filter LIKE 'IN:%'
-            AND ARRAY_CONTAINS(
-                SPLIT(TRIM(METRIC_RULES.biling_group_filter), '|'), 
-                COPA."billing_group"::VARIANT
-            )
-        )
-    )
-    AND (
-        METRIC_RULES.sales_order_code_filter IS NULL
-        OR (
-            METRIC_RULES.sales_order_code_filter LIKE 'NOT:%'
-            AND NOT ARRAY_CONTAINS(
-                    SPLIT(TRIM(METRIC_RULES.sales_order_code_filter), '|'), 
-                    COPA."sales_order_code"::VARIANT
-                )
-        )
-        OR (
-            METRIC_RULES.sales_order_code_filter LIKE 'IN:%'
-            AND ARRAY_CONTAINS(
-                SPLIT(TRIM(METRIC_RULES.sales_order_code_filter), '|'), 
-                COPA."sales_order_code"::VARIANT
-            )
-        )
-    )
+    INNER JOIN {{ ref('int_base_copa_rules') }} AS METRIC_RULES
+        ---- Company Code Logic 
+        ON CASE
+            WHEN METRIC_RULES.include_company_code_list IS NULL 
+                THEN 1 
+            WHEN METRIC_RULES.include_company_code_list
+                AND ARRAY_CONTAINS(
+                         METRIC_RULES.company_code_list
+                        ,COPA."company_code"::VARIANT
+                    )
+                THEN 1
+            ELSE 
+                0
+            END = 1
+        --- Billing Group 
+        AND CASE
+            WHEN METRIC_RULES.include_billing_group_list IS NULL 
+                THEN 1 
+            WHEN METRIC_RULES.include_billing_group_list
+                AND ARRAY_CONTAINS(
+                         METRIC_RULES.billing_group_list
+                        ,COPA."billing_group"::VARIANT
+                    )
+                THEN 1
+            ELSE 
+                0
+            END = 1
+        -- Sales Order Code
+        AND CASE
+            WHEN METRIC_RULES.include_sales_order_code_list IS NULL 
+                THEN 1 
+            WHEN METRIC_RULES.include_sales_order_code_list
+                AND ARRAY_CONTAINS(
+                         METRIC_RULES.sales_order_code_list
+                        ,COPA."sales_order_code"::VARIANT
+                    )
+                THEN 1
+            ELSE 
+                0
+            END = 1 
