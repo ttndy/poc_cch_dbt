@@ -1,7 +1,7 @@
 SELECT 
      "material"
     ,"material_description"
-    ,"submisison_type"
+    ,"submission_type"
     ,"customer"
     ,"department"
     ,"new_invoice"

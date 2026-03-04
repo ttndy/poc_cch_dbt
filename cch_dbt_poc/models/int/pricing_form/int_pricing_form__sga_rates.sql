@@ -3,7 +3,7 @@
 SELECT 
      UPLOAD."material"                                  AS "material"
     ,UPLOAD."material_description"                      AS "material_description"
-    ,UPLOAD."submisison_type"                           AS "submisison_type"
+    ,UPLOAD."submission_type"                           AS "submission_type"
     ,UPLOAD."customer"                                  AS "customer"
     ,UPLOAD."department"                                AS "department"
     ,UPLOAD."new_invoice"                               AS "new_invoice"
@@ -12,9 +12,15 @@ SELECT
     ,SGA."pricing_form_account"                         AS "pricing_form_account"
     ,CASE 
         WHEN UPLOAD."customer" LIKE ('%Direct Import%') AND SGA."pricing_form_account" ='Distribution' THEN 0 
-        ELSE ABS(SGA."value")                                   
+        WHEN SGA."pricing_form_account"  = 'R&D' THEN UPLOAD."rd_cost"
+        WHEN SGA."pricing_form_account" = 'Distribution' THEN UPLOAD."distribution_cost"
+        ELSE ABS(SGA."value")      
         END                                             AS "rate"
-    ,SGA."driver"                                       AS "driver"
+    ,CASE 
+        WHEN SGA."pricing_form_account"  = 'R&D' THEN 'R&D'
+        WHEN SGA."pricing_form_account" = 'Distribution' THEN 'Distribution'
+        ELSE SGA."driver"                                       
+        END                                             AS "driver"
     ,SGA."scenario_year"                                AS "rate_scenario"
     ,UPLOAD."material_overhead_cost"                    AS "mat_oh_cost"
 FROM {{ ref('stg_pricing_form__pl_test') }} AS UPLOAD

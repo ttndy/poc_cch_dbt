@@ -4,7 +4,7 @@
 SELECT 
      UPLOAD."material"                                      AS "material"
     ,UPLOAD."material_description"                          AS "material_description"
-    ,UPLOAD."submisison_type"                               AS "submisison_type"
+    ,UPLOAD."submission_type"                               AS "submission_type"
     ,UPLOAD."customer"                                      AS "customer"
     ,UPLOAD."department"                                    AS "department"
     ,UPLOAD."new_invoice"                                   AS "new_invoice"
@@ -29,7 +29,7 @@ UNION ALL
 SELECT 
      UPLOAD."material"                                  AS "material"
     ,UPLOAD."material_description"                      AS "material_description"
-    ,UPLOAD."submisison_type"                           AS "submisison_type"
+    ,UPLOAD."submission_type"                           AS "submission_type"
     ,UPLOAD."customer"                                  AS "customer"
     ,UPLOAD."department"                                AS "department"
     ,UPLOAD."new_invoice"                               AS "new_invoice"
@@ -44,18 +44,26 @@ FROM {{ ref('stg_pricing_form__pl_test') }} AS UPLOAD
 
 UNION ALL
 
-SELECT 
-     UPLOAD."material"                                  AS "material"
-    ,UPLOAD."material_description"                      AS "material_description"
-    ,UPLOAD."submisison_type"                           AS "submisison_type"
-    ,UPLOAD."customer"                                  AS "customer"
-    ,UPLOAD."department"                                AS "department"
-    ,UPLOAD."new_invoice"                               AS "new_invoice"
-    ,UPLOAD."new_retail"                                AS "new_retail"
-    ,UPLOAD."outdoor_standard_cost"                     AS "standard_cost"
+ SELECT 
+     PL."material"                                  AS "material"
+    ,PL."material_description"                      AS "material_description"
+    ,PL."submission_type"                           AS "submission_type"
+    ,PL."customer"                                  AS "customer"
+    ,PL."department"                                AS "department"
+    ,PL."new_invoice"                               AS "new_invoice"
+    ,PL."new_retail"                                AS "new_retail"
+    ,PL."outdoor_standard_cost"                     AS "standard_cost"
     ,'Transport Rate'                                   AS "pricing_form_account"
-    ,ABS(UPLOAD."transport_cost")                       AS "rate"
+    ,(MFG."value"+ PL."additional_freight")/NULLIF(PL."container_quantity",0)                     AS "rate"
     ,'Transport Rate'                                   AS "driver"
-    ,UPLOAD."scenario_year"                             AS "rate_scenario"
-    ,UPLOAD."material_overhead_cost"                    AS "mat_oh_cost"
-FROM {{ ref('stg_pricing_form__pl_test') }} AS UPLOAD
+    ,PL."scenario_year"                             AS "rate_scenario"
+    ,PL."material_overhead_cost"                    AS "mat_oh_cost"
+FROM POC_CCH_DBT.DEV.STG_PRICING_FORM__PL_TEST PL 
+LEFT JOIN POC_CCH_DBT.DEV.STG_PRICING_FORM__MANUFACTURING_RATES MFG
+ON PL."manufacturing_source" = MFG."manufacturing_source"
+AND PL."scenario_year" = MFG."scenario_year"
+AND (
+            UPPER(PL."shipping_terms") = UPPER(MFG."shipping_terms")
+            OR  MFG."shipping_terms" = 'Blank'
+        )
+AND MFG."account" = 'Freight_Rate' 

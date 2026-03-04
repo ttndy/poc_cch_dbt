@@ -3,7 +3,7 @@
 SELECT 
          UPLOAD."material"                                  AS "material"
         ,UPLOAD."material_description"                      AS "material_description"
-        ,UPLOAD."submisison_type"                           AS "submisison_type"
+        ,UPLOAD."submission_type"                           AS "submission_type"
         ,UPLOAD."customer"                                  AS "customer"
         ,UPLOAD."department"                                AS "department"
         ,UPLOAD."new_invoice"                               AS "new_invoice"
