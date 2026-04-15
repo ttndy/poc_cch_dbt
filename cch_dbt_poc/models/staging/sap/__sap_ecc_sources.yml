@@ -88,3 +88,15 @@ sources:
   - name: src_sap_ecc__vbak
     identifier: vbak 
     description: "Sales Order Header"
+  - name: src_sap_ecc__flexa
+    identifier: FAGLFLEXA
+    description: "General Ledger Consolidated"
+  - name: src_sap_ecc__bkpf
+    identifier: BKPF 
+    description: "GL Header"
+  - name: src_sap_ecc__bseg
+    identifier: BSEG
+    description: "GL Info"
+  - name: src_sap_ecc__pnwtyh
+    identifier: PNWTYH
+    description: "Waranty Claim Header"
