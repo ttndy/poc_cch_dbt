@@ -1,5 +1,4 @@
-# Getting Started with dbt on Snowflake
+# CCH DBT Project
 
-## Overview
-
-This repository contains an example dbt project to get you started with dbt on Snowflake. 
+## Goals
+- Desing and Devolp Standardized Maintainable views for feeds of CCH
